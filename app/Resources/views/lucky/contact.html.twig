@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  
+</head>
+<body>
+
+<div class="container">
+  <h2>Registration form</h2>
+  
+  
+  <?php
+ 
+  function create_image($cap)
+  {
+        unlink("../public/images/image1.png");
+        global $image;
+        $image = imagecreatetruecolor(200, 50) or die("Cannot Initialize new GD image stream");
+        $background_color = imagecolorallocate($image, 255, 255, 255);
+        $text_color = imagecolorallocate($image, 0, 255, 255);
+        $line_color = imagecolorallocate($image, 64, 64, 64);
+        $pixel_color = imagecolorallocate($image, 0, 0, 255);
+        imagefilledrectangle($image, 0, 0, 200, 50, $background_color);
+        for ($i = 0; $i < 3; $i++) {
+        imageline($image, 0, rand() % 50, 200, rand() % 50, $line_color);
+        }
+        for ($i = 0; $i < 1000; $i++) {
+        imagesetpixel($image, rand() % 200, rand() % 50, $pixel_color);
+        }
+        $text_color = imagecolorallocate($image, 0, 0, 0);
+        ImageString($image, 22, 30, 22, $cap, $text_color);
+        /************************************/
+         $_SESSION["code"]=$cap;// Session variable to store captha
+        /*************************************/
+        imagepng($image, "./images/image1.png");
+     } 
+
+create_image($data["cap"]);
+
+  ?>
+  <form action="http://localhost:8000/lucky/thankyou" method="GET">
+    <div class="form-group">
+        <label for="email">Email:</label>
+        <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
+    </div>
+    <div class="form-group">
+        <label for="pwd">Password:</label>
+        <input type="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
+    </div>
+      
+    <div class="form-group">
+          <label for="exampleFormControlSelect1">Gender</label>
+          <select class="form-control" id="genderSelect" name="genderSelect">
+              <option>Male</option>
+              <option>Female</option>
+          </select>
+    </div>
+      
+    <div class="form-group">
+        <label for="exampleFormControlSelect2">Select programming languages</label>
+        <select multiple class="form-control" id="languageSelect" name = "languageSelect">
+            <option>C#</option>
+            <option>PHP</option>
+            <option>Android</option>
+            <option>Java</option>
+            <option>Kotlin</option>
+        </select>
+    </div>
+      
+    <div class="form-group">
+            <label for="comment">Something About yourself</label>
+            <textarea class="form-control" rows="5" id="about" name="about"></textarea>
+    </div>
+      
+    <div class="form-group">
+        
+        <label>Select Shift </label><br>
+      
+        <label class="radio-inline">
+                <input type="radio" name="shiftSelect">Morning
+        </label>
+        <label class="radio-inline">
+                <input type="radio" name="shiftSelect">Evening
+        </label>
+        <label class="radio-inline">
+                <input type="radio" name="shiftSelect">Night
+        </label>
+
+        <div class="checkbox">
+            <label><input type="checkbox" name="remember" oninput="this.setCustomValidity('')" required oninvalid="this.setCustomValidity('You should agree with terms and condition')">Agree Terms And conditions</label>
+        </div>
+    </div>
+ 
+      
+
+    <button type="submit" class="btn btn-default">Submit</button>
+  </form>
+</div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
